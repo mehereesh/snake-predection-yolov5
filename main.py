@@ -8,10 +8,10 @@ from ultralytics import YOLO
 import cvzone
 
 # Twilio account SID and Auth Token (replace with your credentials)
-account_sid = 'ACa18593aa83c74e7230b5e1ab7f9b1dc9'  # Your Twilio Account SID
-auth_token = 'fbe48629c453bb1c0501ac1c9fbbf278'    # Your Twilio Auth Token
-twilio_phone_number = '+14302224933'  # Example: '+14155552671' (replace with your Twilio number)
-your_phone_number = '+918142811718'    # Your phone number (replace with your actual number)
+account_sid = 'your_account_sid'  # Your Twilio Account SID
+auth_token = 'your_auth_token'    # Your Twilio Auth Token
+twilio_phone_number = '+1XXXYYYZZZZ'  # Example: '+14155552671' (replace with your Twilio number)
+your_phone_number = '+6301111718'    # Your phone number (replace with your actual number)
 
 # Initialize Twilio client
 client = Client(account_sid, auth_token)
@@ -57,7 +57,7 @@ def stop_processing():
 def run_detection(use_sms):
     """Function to run snake detection using YOLO"""
     global cap, processing
-    model = YOLO(r'C:\Users\meher.DELL\Downloads\snake_detetion\snake_detetion\best.pt')  # Load your YOLO model
+    model = YOLO(r'best.pt')  # Load your YOLO model
     classnames = ['Snake']  # Assuming class 'Snake' is defined in your model
     processing = True
     
@@ -89,6 +89,7 @@ def run_detection(use_sms):
                 threading.Thread(target=send_sms_alert).start()  # Send SMS alert if snake detected
 
             if cv2.waitKey(25) & 0xFF == ord('q'):  # Press 'q' to stop processing
+                stop_processing()  # Stop the detection loop when 'q' is pressed
                 break
 
     cv2.destroyAllWindows()  # Close all OpenCV windows
